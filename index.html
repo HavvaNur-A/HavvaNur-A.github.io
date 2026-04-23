@@ -1,43 +1,678 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Havva Nur A. | Yapay Zeka Portfolyosu</title>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
-        .header { background: #f4f4f4; padding: 10px; text-align: center; }
-        .project-section { margin-top: 30px; }
-        .project { border-left: 3px solid #007bff; padding-left: 15px; margin-bottom: 20px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Havva Nur A. | AI Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #141414;
+      --surface2: #1c1c1c;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.12);
+      --text: #e8e8e2;
+      --muted: #888880;
+      --accent: #b8f27a;
+      --accent2: #7af2c8;
+      --accent3: #f2c47a;
+      --font: 'DM Sans', sans-serif;
+      --mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─── MAIN ─── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 5rem;
+    }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1.4rem;
+      font-size: 13px;
+      font-family: var(--mono);
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0d0d0d;
+      font-weight: 500;
+    }
+
+    .btn-primary:hover { background: #ceff99; }
+
+    .btn-ghost {
+      border: 1px solid var(--border2);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--text);
+      color: var(--text);
+    }
+
+    /* ─── SECTION ─── */
+    section {
+      padding: 6rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+
+    /* ─── ABOUT ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text {
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .about-text p + p { margin-top: 1rem; }
+
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .skill-group-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--accent2);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 0.25rem 0.65rem;
+      border-radius: 3px;
+      border: 1px solid var(--border2);
+      color: var(--muted);
+    }
+
+    /* ─── PROJECTS ─── */
+    .projects-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project-card.accent-green::before { background: var(--accent); }
+    .project-card.accent-teal::before  { background: var(--accent2); }
+    .project-card.accent-amber::before { background: var(--accent3); }
+
+    .project-card:hover {
+      border-color: var(--border2);
+      transform: translateY(-2px);
+    }
+
+    .project-card:hover::before { opacity: 1; }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .project-badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+    }
+
+    .badge-green { background: rgba(184,242,122,0.1); color: var(--accent); }
+    .badge-teal  { background: rgba(122,242,200,0.1); color: var(--accent2); }
+    .badge-amber { background: rgba(242,196,122,0.1); color: var(--accent3); }
+
+    .project-card h3 {
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .project-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .project-link {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .project-link:hover { color: var(--text); }
+
+    .project-link svg {
+      width: 14px; height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ─── METRICS HIGHLIGHT ─── */
+    .metrics-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .stat-box {
+      background: var(--surface2);
+      border-radius: 6px;
+      padding: 0.9rem 1rem;
+    }
+
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── CONTACT ─── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--border2);
+      transform: translateY(-2px);
+    }
+
+    .contact-icon {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-icon svg {
+      width: 18px; height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .ci-github { background: rgba(255,255,255,0.06); color: var(--text); }
+    .ci-linkedin { background: rgba(122,200,242,0.1); color: var(--accent2); }
+
+    .contact-info { display: flex; flex-direction: column; gap: 2px; }
+    .contact-name { font-size: 14px; font-weight: 500; }
+    .contact-handle { font-size: 12px; color: var(--muted); font-family: var(--mono); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-family: var(--mono);
+      letter-spacing: 0.05em;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── SCROLL ANIMATION ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 680px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      main { padding: 0 1.2rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .metrics-stats { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Havva Nur A.</h1>
-        <p>DevOps Bilincine Sahip Yapay Zeka Geliştirici Adayı</p>
-    </div>
 
-    <h2>Hakkımda</h2>
-    <p>Kariyerime DevOps altyapısı (Docker, Kubernetes) ile sağlam bir temel atarak başladım, ancak kariyer odağımı Yapay Zeka (ML/DL) üzerine yoğunlaştırdım. BTK Akademi eğitimleriyle kazandığım ML yetkinliklerimi, sistem bilgimle birleştirerek güvenli ve ölçeklenebilir Yapay Zeka çözümleri üretmeyi hedefliyorum.</p>
+  <nav>
+    <span class="nav-logo">HN.dev</span>
+    <ul class="nav-links">
+      <li><a href="#about">hakkımda</a></li>
+      <li><a href="#projects">projeler</a></li>
+      <li><a href="#contact">iletişim</a></li>
+    </ul>
+  </nav>
 
-    <h2>Projeler</h2>
+  <main>
 
-    <div class="project-section">
-        
-        
-        <h3>DevOps & Altyapı Projeleri</h3>
-        <div class="project">
-            <h4>CI/CD Pipeline ve Konteyner Yönetimi</h4>
-            <p>Jenkins ile otomatik dağıtım süreçleri ve Docker/Kubernetes temel uygulamaları.</p>
-            <p><strong>Kullanılanlar:</strong> Docker, Kubernetes, Jenkins, Git.</p>
-            <a href="https://github.com/HavvaNur-A/DevOps">Kodu İncele</a>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-tag">yazılım geliştirici</div>
+      <h1>Havva Nur A.<br /><em>AI & DevOps</em></h1>
+      <p class="hero-desc">
+        DevOps altyapısından yapay zeka geliştirmeye uzanan bir yolculuk.
+        Docker, Kubernetes ve Jenkins ile sağlam bir sistem temeli kurdum;
+        şimdi bu bilgiyi ML/DL ile birleştirerek ölçeklenebilir AI çözümleri üretiyorum.
+      </p>
+      <div class="hero-links">
+        <a href="#projects" class="btn btn-primary">Projeleri Gör →</a>
+        <a href="https://github.com/HavvaNur-A" target="_blank" class="btn btn-ghost">GitHub</a>
+        <a href="https://www.linkedin.com/in/havva-nur-a-757333223/" target="_blank" class="btn btn-ghost">LinkedIn</a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <p class="section-label">01 — hakkımda</p>
+      <h2 class="section-title fade-up">Kim olduğum</h2>
+      <div class="about-grid">
+       <div class="about-text fade-up">
+          <p>
+            Kariyerime siber güvenlik ile başladım. Network temelleri, saldırı
+            türleri ve savunma mekanizmaları üzerine sağlam bir altyapı edindim.
+            Linux ve sanal makinelerle aktif çalışarak sistem güvenliği bilincini
+            içselleştirdim.
+          </p>
+          <p>
+            Zamanla odağımı Yapay Zeka ve Makine Öğrenmesi alanına kaydırdım.
+            BTK Akademi, İSMEK, Geleceği Yazanlar ve YouTube kaynaklarıyla
+            edindiğim ML/DL yetkinliklerimi DevOps bilgimle birleştirerek
+            güvenli ve ölçeklenebilir AI çözümleri üretmeyi hedefliyorum.
+          </p>
+          <p>
+            Altınbaş Üniversitesi EVA Otonom Takımı'nın yazılım ekibinde
+            görüntü işleme sorumlusu olarak aktif görev yapıyorum. Yazılım
+            kalitesini metriklerle ölçmek, kodun sadece çalışmasının değil —
+            sürdürülebilir olmasının da önemli olduğuna inandığımı gösteriyor.
+          </p>
         </div>
-    </div>
-    
-    <h2>İletişim</h2>
-    <p>
-        <a href="https://www.linkedin.com/in/havva-nur-a-757333223/">LinkedIn Profilim</a> | 
-        <a href="https://github.com/HavvaNur-A">GitHub Profilim</a>
-    </p>
+        <div class="skills-list fade-up">
+          <div>
+            <p class="skill-group-label">Yapay Zeka & ML</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Deep Learning</span>
+              <div>
+              <p class="skill-group-label">Otonom Sistemler</p>
+              <div class="tags">
+                <span class="tag">Görüntü İşleme</span>
+                <span class="tag">EVA Otonom Takımı</span>
+                <span class="tag">Altınbaş Üniversitesi</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="skill-group-label">DevOps & Altyapı</p>
+            <div class="tags">
+              <span class="tag">Docker</span>
+              <span class="tag">Kubernetes</span>
+              <span class="tag">CI/CD</span>
+            </div>
+          </div>
+          <div>
+            <p class="skill-group-label">Analiz & Araçlar</p>
+            <div class="tags">
+              <span class="tag">Radon</span>
+              <span class="tag">Matplotlib</span>
+              <span class="tag">Pandas</span>
+              <span class="tag">Numpy</span>
+              <span class="tag">Scikit-learn</span>
+              <span> class="tag>ROS2 & Gazebo</span>
+              <span class="tag">Static Analysis</span>
+              <span class="tag">Git</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <p class="section-label">02 — projeler</p>
+      <h2 class="section-title fade-up">Yaptığım işler</h2>
+      <div class="projects-grid">
+
+        <!-- Metrics Project -->
+        <div class="project-card accent-green fade-up">
+          <div class="project-header">
+            <span class="project-badge badge-green">Software Metrics</span>
+          </div>
+          <h3>Flask vs FastAPI — Yazılım Metrik Analizi</h3>
+          <p>
+            İki popüler Python web framework'ünün kaynak kodunu Radon statik
+            analiz aracıyla inceledim. LOC, Cyclomatic Complexity ve
+            Maintainability Index metrikleri üzerinden karşılaştırmalı bir
+            analiz gerçekleştirdim. FastAPI'nin <code style="font-family: var(--mono); font-size: 12px; color: var(--accent)">dependencies/utils.py</code>
+            dosyasının 1.38 MI skoru ile kritik bir bakım riski taşıdığını
+            ortaya koydum.
+          </p>
+          <div class="metrics-stats">
+            <div class="stat-box">
+              <div class="stat-value">3.7×</div>
+              <div class="stat-label">FastAPI/Flask SLOC oranı</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value">1.38</div>
+              <div class="stat-label">En düşük MI skoru</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value">%100</div>
+              <div class="stat-label">Flask Grade A oranı</div>
+            </div>
+          </div>
+          <div class="project-footer">
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Radon</span>
+              <span class="tag">Matplotlib</span>
+              <span class="tag">Open Source</span>
+            </div>
+            <a href="https://github.com/HavvaNur-A/software-metrics-flask-vs-fastapi" target="_blank" class="project-link">
+              GitHub'da gör
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- DevOps Project -->
+        <div class="project-card accent-teal fade-up">
+          <div class="project-header">
+            <span class="project-badge badge-teal">DevOps & Altyapı</span>
+          </div>
+          <h3>CI/CD Pipeline ve Konteyner Yönetimi</h3>
+          <p>
+            Jenkins ile otomatik dağıtım süreçleri tasarladım. Docker
+            konteynerizasyonu ve Kubernetes orkestrasyon sistemleriyle
+            ölçeklenebilir uygulama altyapıları kurdum. CI/CD pipeline'larının
+            end-to-end yapılandırması üzerinde çalıştım.
+          </p>
+          <div class="project-footer">
+            <div class="tags">
+              <span class="tag">Docker</span>
+              <span class="tag">Kubernetes</span>
+              <span class="tag">Jenkins</span>
+              <span class="tag">Git</span>
+            </div>
+            <a href="https://github.com/HavvaNur-A/DevOps" target="_blank" class="project-link">
+              GitHub'da gör
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <p class="section-label">03 — iletişim</p>
+      <h2 class="section-title fade-up">Bana ulaş</h2>
+      <div class="contact-grid fade-up">
+        <a href="https://github.com/HavvaNur-A" target="_blank" class="contact-card">
+          <div class="contact-icon ci-github">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </div>
+          <div class="contact-info">
+            <span class="contact-name">GitHub</span>
+            <span class="contact-handle">@HavvaNur-A</span>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/havva-nur-a-757333223/" target="_blank" class="contact-card">
+          <div class="contact-icon ci-linkedin">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </div>
+          <div class="contact-info">
+            <span class="contact-name">LinkedIn</span>
+            <span class="contact-handle">Havva Nur A.</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Havva Nur A. — Tüm hakları saklıdır.</p>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  </script>
+
 </body>
 </html>
